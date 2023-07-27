@@ -1,0 +1,5 @@
+- name: Minimal
+  hosts: all
+  become: true
+  roles:
+    - set_hostname

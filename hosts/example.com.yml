@@ -1,0 +1,6 @@
+web:
+  hosts:
+    example.com:
+      ansible_host: example.com
+      ansible_user: system
+      hostname: example

@@ -19,3 +19,22 @@ apt install -y curl
 curl -sSL raw.githubusercontent.com/yantene/iac/main/setup.sh -o /tmp/setup.sh
 bash /tmp/setup.sh
 ```
+
+## provision
+
+Check.
+
+```bash
+ansible-playbook \
+  -i ./hosts/example.com.yml \
+  ./playbook-minimal.yml \
+  --check
+```
+
+Provision.
+
+```bash
+ansible-playbook \
+  -i ./hosts/example.com.yml \
+  ./playbook-minimal.yml
+```
