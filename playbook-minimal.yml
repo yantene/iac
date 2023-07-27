@@ -4,3 +4,4 @@
   roles:
     - set_hostname
     - set_timezone
+    - install_essential_utilities
