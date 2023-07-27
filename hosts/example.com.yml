@@ -5,3 +5,7 @@ web:
       ansible_user: system
       hostname: example
       timezone: Asia/Tokyo
+      users:
+        operators: # group: operators, groups: [wheel] + groups
+          - name: operator
+            key: https://github.com/yantene.keys

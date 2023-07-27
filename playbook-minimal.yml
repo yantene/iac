@@ -5,3 +5,4 @@
     - set_hostname
     - set_timezone
     - install_essential_utilities
+    - create_operator_users
