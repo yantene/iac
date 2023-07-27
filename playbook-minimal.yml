@@ -3,3 +3,4 @@
   become: true
   roles:
     - set_hostname
+    - set_timezone

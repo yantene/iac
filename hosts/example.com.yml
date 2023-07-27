@@ -4,3 +4,4 @@ web:
       ansible_host: example.com
       ansible_user: system
       hostname: example
+      timezone: Asia/Tokyo
