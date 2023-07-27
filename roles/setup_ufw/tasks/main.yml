@@ -1,0 +1,16 @@
+# vi: et ts=2 sts=2 ft=ansible
+---
+- name: Install ufw package
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Limit SSH
+  community.general.ufw:
+    rule: limit
+    port: ssh
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled
+    logging: low
