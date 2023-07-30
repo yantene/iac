@@ -1,0 +1,25 @@
+# vi: et ts=2 sts=2 ft=ansible
+---
+- name: Install unzip package
+  ansible.builtin.package:
+    name: unzip
+    state: present
+
+- name: Make /tmp/awscli directory
+  ansible.builtin.file:
+    path: /tmp/awscli
+    state: directory
+    mode: "0755"
+
+- name: Download and unzip AWS CLI v2
+  ansible.builtin.unarchive:
+    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp/awscli
+    remote_src: true
+  args:
+    creates: /tmp/awscli/aws
+
+- name: Install AWS CLI v2
+  ansible.builtin.command: /tmp/awscli/aws/install --update
+  args:
+    creates: /usr/local/bin/aws

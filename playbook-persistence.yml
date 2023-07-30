@@ -1,0 +1,10 @@
+- name: Postgres
+  hosts: all
+  become: true
+  roles:
+    - set_hostname
+    - set_timezone
+    - install_essential_utilities
+    - setup_ufw
+    - create_operator_users
+    - setup_awscli
