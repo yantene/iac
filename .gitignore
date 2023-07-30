@@ -1,3 +1,4 @@
+/tmp
+
 /hosts/*.yml
 !/hosts/example.com.yml
-
