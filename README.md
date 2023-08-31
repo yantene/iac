@@ -8,7 +8,8 @@ https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.0.0-amd64-ne
 
 The following points should be noted during the OS installation process.
 
-- Create "system" user as a general user.
+- Create "opuser" user as a operator user.
+- Add the "opuser" user to the "opusers" group.
 
 ## initial setup
 

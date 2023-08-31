@@ -2,11 +2,11 @@
 
 # set variables
 
-read -p "system user name (system): " system_user
-[[ -z ${system_user} ]] && system_user=system
+read -p "operator user name (opuser): " operator_user
+[[ -z ${operator_user} ]] && operator_user=opuser
 
-read -p "system group name (system): " system_group
-[[ -z ${system_group} ]] && system_group=system
+read -p "operator group name (opusers): " operator_group
+[[ -z ${operator_group} ]] && operator_group=opusers
 
 read -p "github user name (yantene): " github_user
 [[ -z ${github_user} ]] && github_user=yantene
@@ -42,19 +42,32 @@ read -p "inet ipv6 gateway (2001:db8:0:1::1): " inet_ipv6_gateway
 
 apt install -y sudo git vim curl
 
-# setup system user's authorized_keys
+# setup operator user's authorized_keys
 
-mkdir -m700 /home/${system_user}/.ssh
-chown ${system_user}:${system_group} /home/${system_user}/.ssh
-curl https://github.com/${github_user}.keys -o /home/${system_user}/.ssh/authorized_keys
-chown ${system_user}:${system_group} /home/${system_user}/.ssh/authorized_keys
-chmod 600 /home/${system_user}/.ssh/authorized_keys
+mkdir -m700 /home/${operator_user}/.ssh
+chown ${operator_user}:${operator_group} /home/${operator_user}/.ssh
+curl https://github.com/${github_user}.keys -o /home/${operator_user}/.ssh/authorized_keys
+chown ${operator_user}:${operator_group} /home/${operator_user}/.ssh/authorized_keys
+chmod 600 /home/${operator_user}/.ssh/authorized_keys
 
 # setup sudoers
 
-echo -e "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-wheel-nopasswd
-/usr/sbin/groupadd wheel
-gpasswd -a ${system_user} wheel
+mv /etc/sudoers /etc/sudoers.bak
+
+cat <<EOF > /etc/sudoers
+Defaults env_reset
+Defaults mail_badpass
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+Defaults use_pty
+
+root ALL=(ALL) ALL
+
+@includedir /etc/sudoers.d
+EOF
+
+echo -e "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/99-sudo-nopasswd
+gpasswd -a ${operator_user} sudo
 
 # setup sshd config
 

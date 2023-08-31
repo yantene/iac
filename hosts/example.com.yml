@@ -2,10 +2,37 @@ web:
   hosts:
     example.com:
       ansible_host: example.com
-      ansible_user: system
+      ansible_user: opuser
       hostname: example
       timezone: Asia/Tokyo
+      domain_names:
+        - example.com
       users:
-        operators: # group: operators, groups: [wheel] + groups
-          - name: operator
+        operators: # group: opusers, groups: [sudo] + groups
+          - name: opuser
             key: https://github.com/yantene.keys
+      postgres:
+        users:
+          - name: opuser
+            password: P455w0rd
+            role_attr_flags:
+              - CREATEDB
+              - CREATEROLE
+              - SUPERUSER
+        addresses:
+          - address: "203.0.113.123"
+            users:
+              - opuser
+            databases:
+              - postgres
+          - address: "2001:db8:0:1:98:76:54:32"
+            users:
+              - opuser
+            databases:
+              - postgres
+      r2:
+        access_key_id: ffffffffffffffffffffffffffffffff
+        secret_access_key: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        endpoint_url: https://ffffffffffffffffffffffffffffffff.r2.cloudflarestorage.com
+        bucket_name: example-database-backup
+

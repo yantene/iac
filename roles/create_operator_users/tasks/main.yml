@@ -1,25 +1,25 @@
 # vi: et ts=2 sts=2 ft=ansible
 ---
-- name: Create wheel group
+- name: Create sudo group
   ansible.builtin.group:
-    name: wheel
+    name: sudo
 
-- name: Grant passwordless sudo to wheel group
+- name: Grant passwordless sudo to sudo group
   ansible.builtin.template:
-    src: etc/sudoers.d/99-wheel-nopasswd
-    dest: /etc/sudoers.d/99-wheel-nopasswd
+    src: etc/sudoers.d/99-sudo-nopasswd
+    dest: /etc/sudoers.d/99-sudo-nopasswd
     mode: "0644"
 
-- name: Create operators group
+- name: Create opusers group
   ansible.builtin.group:
-    name: operators
+    name: opusers
 
 - name: Create operator users
   ansible.builtin.user:
     name: "{{ item.name }}"
     shell: /bin/bash
-    group: operators
-    groups: "{{ item.groups | default([]) + ['wheel'] }}"
+    group: opusers
+    groups: "{{ item.groups | default([]) + ['sudo'] }}"
   loop: "{{ users.operators }}"
 
 - name: Set authorized keys to operator users
